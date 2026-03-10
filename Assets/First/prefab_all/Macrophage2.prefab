@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 797386387927656169}
   - component: {fileID: 8351159878513653906}
   - component: {fileID: 9083102763826788679}
-  - component: {fileID: 4684992696317822836}
-  m_Layer: 0
-  m_Name: ImmuneCell
+  - component: {fileID: -1433070666597176249}
+  m_Layer: 3
+  m_Name: Macrophage2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -137,7 +137,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2805010340683526141}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -156,7 +156,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &4684992696317822836
+--- !u!114 &-1433070666597176249
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -165,12 +165,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 2805010340683526141}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87175da1e2da01d4f91a1fdff5b896c7, type: 3}
+  m_Script: {fileID: 11500000, guid: a38280d7893690346a595866b9922779, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DragCell
-  lane1X: -1.44
-  lane2X: 0.735
-  lane3X: 2.9
-  minY: -4.5
-  maxY: -3.17
-  immunePrefab: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::ImmuneMove
+  speed: 2
+  targetType: 1

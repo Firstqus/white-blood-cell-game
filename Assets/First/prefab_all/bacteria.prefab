@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 7037544670271594247}
   - component: {fileID: 5594185545196123335}
   - component: {fileID: -3771971310493892203}
-  - component: {fileID: 286145978249505327}
-  - component: {fileID: -4226916711928091650}
+  - component: {fileID: 8894185343273528068}
+  - component: {fileID: 2883145458051218781}
   m_Layer: 6
-  m_Name: Virus
+  m_Name: bacteria
   m_TagString: Virus
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84,7 +84,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 10
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.90943396, g: 0.073784195, b: 0.1453767, a: 1}
+  m_Color: {r: 0.09947838, g: 0.0745098, b: 0.9098039, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -143,7 +143,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
---- !u!50 &286145978249505327
+--- !u!50 &8894185343273528068
 Rigidbody2D:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -170,7 +170,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &-4226916711928091650
+--- !u!114 &2883145458051218781
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -182,4 +182,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3739b724192463f41bcb931743288fe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pathogen
-  type: 0
+  type: 1

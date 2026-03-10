@@ -5,14 +5,15 @@ TagManager:
   serializedVersion: 3
   tags:
   - Virus
+  - Bacteria
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Immune
   - Water
   - UI
-  - 
+  - Enemy
   - 
   - 
   - 
