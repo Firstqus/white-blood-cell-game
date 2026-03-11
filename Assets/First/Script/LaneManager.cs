@@ -17,23 +17,27 @@ public class LaneManager : MonoBehaviour
 
     [Header("Hint UI")]
     public TextMeshProUGUI hintText;
-    public float hintDuration = 2f;
+    public float hintDuration    = 2f;
     public float delayAfterHints = 3f;
 
-    [Header("Spawn Timing")]
-    public float minSpawnGap = 1f;   // เว้นระหว่าง lane อย่างน้อยกี่วิ
-    public float maxSpawnGap = 2.5f; // เว้นระหว่าง lane สูงสุดกี่วิ
-    public float roundInterval = 5f; // รอกี่วิก่อนจะปล่อยรอบถัดไป
+    [Header("Spawn Timing (ปรับโดย WaveManager)")]
+    public float minSpawnGap   = 1f;
+    public float maxSpawnGap   = 2.5f;
+    public float roundInterval = 5f;
 
-    PathogenType[] laneTypes = new PathogenType[3];
-    Transform[] spawnPoints;
-    string[] laneNames = { "Lane 1", "Lane 2", "Lane 3" };
+    [Header("Difficulty (ปรับโดย WaveManager)")]
+    public float pathogenSpeed = 2f;
+    [Tooltip("1 = ปกติ, 2+ = Swarm")]
+    public int   swarmCount    = 1;
+
+    PathogenType[] laneTypes  = new PathogenType[3];
+    Transform[]    spawnPoints;
+    readonly string[] laneNames = { "Lane 1", "Lane 2", "Lane 3" };
 
     void Start()
     {
         spawnPoints = new Transform[] { spawnLane1, spawnLane2, spawnLane3 };
 
-        // สุ่มแบบไม่ซ้ำ — แต่ละ lane ได้ชนิดต่างกันแน่นอน
         PathogenType[] all = { PathogenType.Virus, PathogenType.Bacteria, PathogenType.Parasite };
         for (int i = all.Length - 1; i > 0; i--)
         {
@@ -47,13 +51,8 @@ public class LaneManager : MonoBehaviour
 
     IEnumerator GameSequence()
     {
-        // 1. แสดง hint ครบ 3 lane
         yield return StartCoroutine(ShowAllHints());
-
-        // 2. รอหลัง hint สุดท้าย
         yield return new WaitForSeconds(delayAfterHints);
-
-        // 3. เริ่ม spawn
         StartCoroutine(SpawnLoop());
     }
 
@@ -66,10 +65,8 @@ public class LaneManager : MonoBehaviour
         }
     }
 
-    // ปล่อยทีละ lane โดยสุ่มลำดับและเว้นช่วงแต่ละตัว
     IEnumerator SpawnOneByOne()
     {
-        // สุ่มลำดับ lane ที่จะออกรอบนี้
         List<int> order = new List<int> { 0, 1, 2 };
         for (int i = order.Count - 1; i > 0; i--)
         {
@@ -83,11 +80,18 @@ public class LaneManager : MonoBehaviour
 
             GameObject prefab = GetPrefab(laneTypes[i]);
             if (prefab != null)
-                Instantiate(prefab, spawnPoints[i].position, Quaternion.identity);
+            {
+                for (int s = 0; s < swarmCount; s++)
+                {
+                    Vector3 pos = spawnPoints[i].position + Vector3.up * (s * 1.2f);
+                    GameObject go = Instantiate(prefab, pos, Quaternion.identity);
 
-            // เว้นระยะสุ่มก่อนปล่อย lane ถัดไป
-            float gap = Random.Range(minSpawnGap, maxSpawnGap);
-            yield return new WaitForSeconds(gap);
+                    VirusMove mover = go.GetComponent<VirusMove>();
+                    if (mover != null) mover.speed = pathogenSpeed;
+                }
+            }
+
+            yield return new WaitForSeconds(Random.Range(minSpawnGap, maxSpawnGap));
         }
     }
 
@@ -99,31 +103,24 @@ public class LaneManager : MonoBehaviour
         {
             string enemy = laneTypes[i] switch
             {
-                PathogenType.Virus    => "Virus → ใช้ CD8",
-                PathogenType.Bacteria => "Bacteria → ใช้ Macrophage",
-                PathogenType.Parasite => "Parasite → ใช้ Eosinophil",
+                PathogenType.Virus    => "Virus → use CD8",
+                PathogenType.Bacteria => "Bacteria → use Macrophage",
+                PathogenType.Parasite => "Parasite → use Eosinophil",
                 _                     => ""
             };
-
             hintText.text = laneNames[i] + ": " + enemy;
             hintText.gameObject.SetActive(true);
-
             yield return new WaitForSeconds(hintDuration);
-
             hintText.gameObject.SetActive(false);
-
             yield return new WaitForSeconds(0.3f);
         }
     }
 
-    GameObject GetPrefab(PathogenType type)
+    GameObject GetPrefab(PathogenType type) => type switch
     {
-        return type switch
-        {
-            PathogenType.Virus    => virusPrefab,
-            PathogenType.Bacteria => bacteriaPrefab,
-            PathogenType.Parasite => parasitePrefab,
-            _                     => null
-        };
-    }
+        PathogenType.Virus    => virusPrefab,
+        PathogenType.Bacteria => bacteriaPrefab,
+        PathogenType.Parasite => parasitePrefab,
+        _                     => null
+    };
 }

@@ -168,9 +168,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87175da1e2da01d4f91a1fdff5b896c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DragCell
-  lane1X: -1.44
-  lane2X: 0.735
-  lane3X: 2.9
+  lane1Spawn: {fileID: 0}
+  lane2Spawn: {fileID: 0}
+  lane3Spawn: {fileID: 0}
   minY: -4.5
   maxY: -3.17
   immunePrefab: {fileID: 0}
+  atpCost: 20
+  notEnoughATPText: {fileID: 0}
+  feedbackDuration: 1
+  costLabel: {fileID: 0}
