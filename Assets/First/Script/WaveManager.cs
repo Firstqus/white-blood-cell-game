@@ -37,22 +37,32 @@ void Start()
     StartCoroutine(ShowWaveBanner(1));
 }
 
-public void CheckWave(int score)
-{
-    int newWave = 0;
-    for (int i = waveScoreThresholds.Length - 1; i >= 0; i--)
-    {
-        if (score >= waveScoreThresholds[i]) { newWave = i; break; }
-    }
+// ไฟล์: WaveManager.cs
 
-    if (newWave != currentWave)
+    public void CheckWave(int score)
     {
-        currentWave = newWave;
-        ApplyWaveConfig(currentWave);
-        StartCoroutine(ShowWaveBanner(currentWave + 1));
-        GameManager.Instance?.UpdateCellUnlock(currentWave + 1); // ← เรียกตรงนี้ด้วย
+        int newWave = 0;
+        for (int i = waveScoreThresholds.Length - 1; i >= 0; i--)
+        {
+            if (score >= waveScoreThresholds[i]) { newWave = i; break; }
+        }
+
+        if (newWave > currentWave)
+        {
+            currentWave = newWave;
+            ApplyWaveConfig(currentWave);
+            
+            StartCoroutine(ShowWaveBanner(currentWave + 1));
+            laneManager.ResetForNewWave();
+            
+            // ถ้าเข้า Wave 5 (Index 4) ให้บอก LaneManager ว่านี่คือรอบบอส
+            if (currentWave == 4) 
+            {
+                laneManager.SetBossWave();
+            }
+        }
+        
     }
-}
 
     public int GetCurrentWave() => currentWave + 1 < 1 ? 1 : currentWave + 1;
 
@@ -68,33 +78,41 @@ public void CheckWave(int score)
         laneManager.rounds        = c.rounds; // ← เปลี่ยนจาก roundVariants
     }
 
-    [Header("Wave Description")]
-    public string[] waveDescriptions = {
-        "🦠 Bacteria เริ่มเข้าแผล กำลังแบ่งตัว!",
-        "⚡ Bacteria กระจายเร็วขึ้น ระวัง!",
-        "🛡 บางตัวสร้าง Biofilm ป้องกันตัวเอง!",
-        "🦠🦠 Bacteria รวมกลุ่ม — Biofilm Cluster!",
-        "💀 เชื้อดื้อยาปรากฏ! ระดมทุกอย่าง!"
-    };
+// ไฟล์: WaveManager.cs (ส่วนที่ปรับปรุงใหม่)
+
+[Header("Wave Narrative")]
+public string[] waveNarratives = {
+    "🦠 แบคทีเรียเริ่มบุกรุก! ส่ง Neutrophil ไปสกัดกั้นด่านหน้า",
+    "📈 แบคทีเรียแบ่งตัวเร็วขึ้น! นำ Macrophage มาช่วยจับกินและส่งสัญญาณ",
+    "🛡️ เชื้อสร้าง Biofilm มาป้องกัน! ใช้ NK Cell ที่มีพลังทำลายสูงไปจัดการ",
+    "⚠️ การติดเชื้อรุนแรงขึ้น! รักษาระดับแนวป้องกันไว้ให้มั่น",
+    "💀 พบบอสใหญ่ (Superbug)! ระดมกำลังทั้งหมดที่มี!"
+};
 
 IEnumerator ShowWaveBanner(int waveNumber)
 {
     if (waveBannerText == null) yield break;
 
     int idx = waveNumber - 1;
-    string desc = idx < waveDescriptions.Length ? waveDescriptions[idx] : "";
+    // ดึง Narrative ตาม Wave
+    string narrative = idx < waveNarratives.Length ? waveNarratives[idx] : "";
 
-    // ปรับเงื่อนไขการแสดงข้อความ Unlocked ให้ตรงกับ Logic ใหม่
+    // ข้อความปลดล็อก (อิงตามที่คุยกันรอบก่อน)
     string unlockMsg = waveNumber switch
     {
-        2 => "\n🟡 Macrophage Unlocked! Neutrophil ส่งสัญญาณเรียกมาแล้ว",
-        3 => "\n🔵 NK Cell Unlocked! ระบบส่งผู้เชี่ยวชาญมาช่วย",
+        2 => "\n[NEW] 🟡 Macrophage: กินแบคทีเรียได้ต่อเนื่อง",
+        3 => "\n[NEW] 🔵 NK Cell: ทะลวงเกราะ Biofilm ได้ดี",
         _ => ""
     };
 
-    waveBannerText.text = $"— WAVE {waveNumber} —\n{desc}{unlockMsg}";
+    waveBannerText.text = $"— WAVE {waveNumber} —\n{narrative}\n<color=yellow>{unlockMsg}</color>";
     waveBannerText.gameObject.SetActive(true);
-    yield return new WaitForSeconds(bannerDuration);
+    
+    // หยุดเวลาเกมชั่วคราวเพื่อให้ผู้เล่นอ่าน (Optional)
+    // Time.timeScale = 0f; 
+    yield return new WaitForSecondsRealtime(bannerDuration);
+    // Time.timeScale = 1f;
+
     waveBannerText.gameObject.SetActive(false);
 }
 
@@ -117,4 +135,6 @@ public class WaveConfig
         new SpawnRound { variant = BacteriaVariant.Swarm,   swarmSize     = 4  },
         new SpawnRound { variant = BacteriaVariant.Boss,    hpOverride    = 5f },
     };
+
+    
 }

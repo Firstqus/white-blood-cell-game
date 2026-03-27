@@ -2,5 +2,6 @@ public enum PathogenType
 {
     Virus,
     Bacteria,
-    Parasite
+    Parasite,
+    Boss
 }

@@ -5,7 +5,8 @@ public class Pathogen : MonoBehaviour
     public PathogenType type;
     public float maxHp = 1f;
     public int scoreValue = 10;
-    public float atpReward = 20f; // ← ตั้งต่อ prefab: Normal=20, Armored=50, Boss=100
+    public float atpReward = 20f;
+    public bool isBoss = false; // ← ติ๊กใน Inspector บน Boss prefab
 
     float currentHp;
 
@@ -17,10 +18,14 @@ public class Pathogen : MonoBehaviour
         if (currentHp <= 0) Die();
     }
 
-    void Die()
-    {
-        GameManager.Instance?.AddScore(scoreValue);
-        ATPManager.Instance?.AddATP(atpReward); // ← คืน ATP โดยตรง ไม่ผ่าน OnKillBonus
-        Destroy(gameObject);
-    }
+void Die()
+{
+    GameManager.Instance?.AddScore(scoreValue);
+    ATPManager.Instance?.AddATP(atpReward);
+
+    if (isBoss)
+        GameManager.Instance?.ShowVictory(); // เรียกก่อน
+
+    Destroy(gameObject);
+}
 }

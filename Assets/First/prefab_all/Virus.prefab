@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -4226916711928091650}
   m_Layer: 6
   m_Name: Virus
-  m_TagString: Virus
+  m_TagString: Bacteria
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -182,7 +182,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3739b724192463f41bcb931743288fe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pathogen
-  type: 0
+  type: 1
   maxHp: 5
   scoreValue: 10
   atpReward: 120
+  isBoss: 1

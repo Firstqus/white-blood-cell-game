@@ -30,7 +30,18 @@ public class LaneManager : MonoBehaviour
     public SpawnRound[] rounds;
 
     Transform[] spawnPoints;
-    int currentRound = 0;
+public int currentRound = 0;
+
+// เพิ่มฟังก์ชันนี้เพื่อให้ WaveManager สั่ง Reset รอบเวลาขึ้น Wave ใหม่
+public void ResetForNewWave()
+{
+    currentRound = 0;
+    isStopSpawning = false;
+    bossSpawned = false;
+    // หยุด Coroutine เก่าก่อนเริ่มใหม่ เพื่อป้องกันมอนเกิดซ้อน
+    StopAllCoroutines(); 
+    StartCoroutine(SpawnLoop());
+}
 
     void Start()
     {
@@ -45,71 +56,109 @@ public class LaneManager : MonoBehaviour
         StartCoroutine(SpawnLoop());
     }
 
-    IEnumerator SpawnLoop()
+bool bossSpawned = false;
+bool isStopSpawning = false;
+
+public void SetBossWave()
+{
+    // ไม่ต้องทำอะไรพิเศษ แค่ให้ SpawnLoop ทำงานต่อไปจนเจอ Variant Boss
+}
+
+IEnumerator SpawnLoop()
+{
+    while (!isStopSpawning)
     {
-        while (true)
+        yield return StartCoroutine(SpawnOneByOne());
+
+        if (isStopSpawning) yield break; // Boss set ค่าใน SpawnOneByOne แล้ว
+
+        yield return new WaitForSeconds(roundInterval);
+    }
+}
+
+IEnumerator SpawnOneByOne()
+{
+    SpawnRound round = GetCurrentRound();
+
+    // --- CASE: BOSS ---
+    if (round.variant == BacteriaVariant.Boss)
+    {
+        if (!bossSpawned)
         {
-            yield return StartCoroutine(SpawnOneByOne());
-            yield return new WaitForSeconds(roundInterval);
+            SpawnAt(Random.Range(0, 3), round);
+            bossSpawned = true;
+            isStopSpawning = true;
         }
+        yield break;
     }
 
-    IEnumerator SpawnOneByOne()
+    // --- shuffle lane ---
+    List<int> order = new List<int> { 0, 1, 2 };
+    for (int i = order.Count - 1; i > 0; i--)
     {
-        // อ่าน round ปัจจุบันจาก rounds[] ตรงๆ ไม่สุ่ม
-        SpawnRound round = GetCurrentRound();
+        int j = Random.Range(0, i + 1);
+        (order[i], order[j]) = (order[j], order[i]);
+    }
 
-        // Shuffle แค่ลำดับ lane ไม่ใช่ variant
-        List<int> order = new List<int> { 0, 1, 2 };
-        for (int i = order.Count - 1; i > 0; i--)
+    // --- CASE: SWARM ---
+    if (round.variant == BacteriaVariant.Swarm)
+    {
+        int count = round.swarmSize > 0 ? round.swarmSize : 6;
+
+        for (int i = 0; i < count; i++)
         {
-            int j = Random.Range(0, i + 1);
-            (order[i], order[j]) = (order[j], order[i]);
-        }
+            int laneIndex = order[Random.Range(0, order.Count)];
 
-        if (round.variant == BacteriaVariant.Boss)
-        {
-            SpawnAt(1, round);
-            currentRound++;
-            yield break;
-        }
+            SpawnAt(laneIndex, round);
 
+            // 🔥 เพิ่ม random offset ให้ดูเป็นฝูง
+            yield return new WaitForSeconds(Random.Range(0.05f, 0.2f));
+        }
+    }
+    else
+    {
         foreach (int i in order)
         {
             if (spawnPoints[i] == null) continue;
+
             SpawnAt(i, round);
+
             yield return new WaitForSeconds(Random.Range(minSpawnGap, maxSpawnGap));
         }
-
-        currentRound++;
     }
 
-    void SpawnAt(int laneIdx, SpawnRound round)
+    currentRound++;
+}
+void SpawnAt(int laneIdx, SpawnRound round)
+{
+    GameObject prefab = round.variant switch
     {
-        GameObject prefab = round.variant switch
-        {
-            BacteriaVariant.Fast    => bacteriaFastPrefab  ?? bacteriaPrefab,
-            BacteriaVariant.Armored => bacteriaArmorPrefab ?? bacteriaPrefab,
-            BacteriaVariant.Boss    => bacteriaBossPrefab  ?? bacteriaPrefab,
-            _                       => bacteriaPrefab
-        };
+        BacteriaVariant.Fast    => bacteriaFastPrefab  ?? bacteriaPrefab,
+        BacteriaVariant.Armored => bacteriaArmorPrefab ?? bacteriaPrefab,
+        BacteriaVariant.Boss    => bacteriaBossPrefab  ?? bacteriaPrefab,
+        _                       => bacteriaPrefab
+    };
 
-        int count = round.variant == BacteriaVariant.Swarm ? round.swarmSize : 1;
+    // 🔥 random offset (ทำให้ไม่เรียงเส้นตรง)
+    Vector3 offset = Vector3.zero;
 
-        for (int s = 0; s < count; s++)
-        {
-            Vector3 pos = spawnPoints[laneIdx].position + Vector3.up * (s * 1.2f);
-            GameObject go = Instantiate(prefab, pos, Quaternion.identity);
-
-            var mover = go.GetComponent<VirusMove>();
-            if (mover != null) mover.speed = round.speedOverride > 0
-                ? round.speedOverride : pathogenSpeed;
-
-            var pathogen = go.GetComponent<Pathogen>();
-            if (pathogen != null) pathogen.maxHp = round.hpOverride > 0
-                ? round.hpOverride : 1f;
-        }
+    if (round.variant == BacteriaVariant.Swarm)
+    {
+        offset = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), 0);
     }
+
+    Vector3 pos = spawnPoints[laneIdx].position + offset;
+
+    GameObject go = Instantiate(prefab, pos, Quaternion.identity);
+
+    var mover = go.GetComponent<VirusMove>();
+    if (mover != null)
+        mover.speed = round.speedOverride > 0 ? round.speedOverride : pathogenSpeed;
+
+    var pathogen = go.GetComponent<Pathogen>();
+    if (pathogen != null)
+        pathogen.maxHp = round.hpOverride > 0 ? round.hpOverride : 1f;
+}
 
     SpawnRound GetCurrentRound()
     {

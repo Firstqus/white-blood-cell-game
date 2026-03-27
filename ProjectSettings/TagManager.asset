@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Virus
   - Bacteria
+  - Boss
   layers:
   - Default
   - TransparentFX

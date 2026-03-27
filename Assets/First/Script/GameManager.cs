@@ -111,4 +111,22 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene(0);
     }
+
+    // ไฟล์: GameManager.cs (เพิ่มส่วน Victory)
+    [Header("Victory UI")]
+    public GameObject victoryPanel;
+    public TextMeshProUGUI victoryStatusText;
+
+    public void ShowVictory()
+    {
+        Time.timeScale = 0f; // หยุดเกม
+        if (victoryPanel != null)
+        {
+            victoryPanel.SetActive(true);
+            if (victoryStatusText != null)
+            {
+                victoryStatusText.text = "🛡️ การติดเชื้อถูกควบคุมแล้ว!\nบาดแผลของคุณกำลังได้รับการรักษา...";
+            }
+        }
+    }
 }
