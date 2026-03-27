@@ -9,6 +9,7 @@ EditorBuildSettings:
     path: Assets/Get/copyscene.unity
     guid: bb257e8d11aff644c98888471da3618c
   m_configObjects:
+    UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 26f8a8f3f997924449ddb5d7b235d80c, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
     com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: 5f44839f64911ac4faa15ca3d87e5113, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: dded4ec97cae16048a27f47d1be33213, type: 2}
