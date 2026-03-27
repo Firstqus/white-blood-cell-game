@@ -1556,8 +1556,8 @@ MonoBehaviour:
   textTip: {fileID: 927356883}
   wbcSprites:
   - {fileID: 6779296123857711636, guid: c89408d79be8cd34cae793740c01926f, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2467491259192402747, guid: 563b3afe400c6d64ab7326302e658aad, type: 3}
+  - {fileID: 6243355746201222545, guid: af7e54f8b997ba54a9c37d517914a524, type: 3}
   dots:
   - {fileID: 297641345}
   - {fileID: 405847911}
