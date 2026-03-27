@@ -57,7 +57,7 @@ public void ResetForNewWave()
     }
 
 bool bossSpawned = false;
-bool isStopSpawning = false;
+public bool isStopSpawning = false;
 
 public void SetBossWave()
 {
