@@ -1,0 +1,1 @@
+public enum BacteriaVariant { Normal, Fast, Armored, Swarm, Boss }

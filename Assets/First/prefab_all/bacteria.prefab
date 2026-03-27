@@ -183,3 +183,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pathogen
   type: 1
+  maxHp: 1
+  scoreValue: 10
+  atpReward: 25

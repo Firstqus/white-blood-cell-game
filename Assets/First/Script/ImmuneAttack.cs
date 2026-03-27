@@ -1,30 +1,22 @@
 using UnityEngine;
 
-// แขวนสคริปต์นี้ไว้กับ Prefab ของเม็ดเลือดขาวแต่ละตัว
-// ตั้งค่า targetType ใน Inspector:
-//   CD8        → Virus
-//   Macrophage → Bacteria
-//   Eosinophil → Parasite
-
 public class ImmuneAttack : MonoBehaviour
 {
-    public PathogenType targetType;  // ฆ่าได้แค่ชนิดเดียว
+    public PathogenType targetType;
+    public float damage = 1f;
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnCollisionEnter2D(Collision2D col)
     {
-        Pathogen pathogen = other.GetComponent<Pathogen>();
+        Pathogen pathogen = col.gameObject.GetComponent<Pathogen>();
         if (pathogen == null) return;
 
         if (pathogen.type == targetType)
         {
-            // ถูกชนิด → กำจัด + ได้คะแนน
-            GameManager.Instance?.AddScore(10);
-            Destroy(other.gameObject);
+            pathogen.TakeDamage(damage); // Die() จัดการ score เอง
             Destroy(gameObject);
         }
         else
         {
-            // ผิดชนิด → เม็ดเลือดขาวตาย ศัตรูผ่านต่อ
             Destroy(gameObject);
         }
     }

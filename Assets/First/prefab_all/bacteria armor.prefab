@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 7037544670271594247}
   - component: {fileID: 5594185545196123335}
   - component: {fileID: -3771971310493892203}
-  - component: {fileID: 286145978249505327}
-  - component: {fileID: -4226916711928091650}
+  - component: {fileID: 8894185343273528068}
+  - component: {fileID: 2883145458051218781}
   m_Layer: 6
-  m_Name: Virus
+  m_Name: bacteria armor
   m_TagString: Virus
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,13 +29,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4774751532478720229}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: 0.12830064, w: 0.99173534}
   m_LocalPosition: {x: -2.25, y: 3.97, z: 0}
-  m_LocalScale: {x: 0.5253277, y: 0.5253277, z: 0.5253277}
+  m_LocalScale: {x: 0.57511, y: 0.57511, z: 0.57511}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 14.743}
 --- !u!212 &7037544670271594247
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -83,8 +83,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: -2088672642877526922, guid: 903015b2ddbd5de4e8d8af3bd31d97e1, type: 3}
-  m_Color: {r: 0.90943396, g: 0.073784195, b: 0.1453767, a: 1}
+  m_Sprite: {fileID: 4540396016053426264, guid: 7d78a6faf3016a6469a4a5c2ef8fcb95, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -143,7 +143,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
---- !u!50 &286145978249505327
+--- !u!50 &8894185343273528068
 Rigidbody2D:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -170,7 +170,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &-4226916711928091650
+--- !u!114 &2883145458051218781
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -182,7 +182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3739b724192463f41bcb931743288fe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pathogen
-  type: 0
-  maxHp: 5
+  type: 1
+  maxHp: 2
   scoreValue: 10
-  atpReward: 120
+  atpReward: 50

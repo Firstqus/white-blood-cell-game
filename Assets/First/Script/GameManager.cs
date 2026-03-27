@@ -26,6 +26,23 @@ public class GameManager : MonoBehaviour
     [Header("Game Over")]
     public GameObject      gameOverPanel;
     public TextMeshProUGUI finalScoreText;
+    [Header("Cell Unlock (ตาม Wave)")]
+    public GameObject neutrophilButton;  // link ปุ่มใน Inspector
+    public GameObject macrophageButton;
+    public GameObject nkCellButton;
+
+// ไฟล์: GameManager.cs
+    public void UpdateCellUnlock(int wave)
+    {
+        // Wave 1: มีแค่ Neutrophil
+        neutrophilButton?.SetActive(true);
+
+        // Wave 2 ขึ้นไป: ปลดล็อก Macrophage
+        macrophageButton?.SetActive(wave >= 2); 
+
+        // Wave 3 ขึ้นไป: ปลดล็อก NK Cell
+        nkCellButton?.SetActive(wave >= 3);
+    }
 
     void Awake()
     {
@@ -41,14 +58,13 @@ public class GameManager : MonoBehaviour
     }
 
     public void AddScore(int points = 10)
-    {
-        score += points;
-        killCount++;
-        ATPManager.Instance?.OnKillBonus();
-        WaveManager.Instance?.CheckWave(score);
-        CytokineSpawner.Instance?.OnEnemyKilled();
-        UpdateUI();
-    }
+{
+    score += points;
+    killCount++;
+    // ATPManager.Instance?.OnKillBonus(); ← ลบบรรทัดนี้ออก
+    WaveManager.Instance?.CheckWave(score);
+    UpdateUI();
+}
 
     public void TakeDamage(int damage = 1)
     {
@@ -73,6 +89,8 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < heartImages.Length; i++)
             if (heartImages[i] != null)
                 heartImages[i].sprite = (i < hp) ? heartFull : heartEmpty;
+        UpdateCellUnlock(WaveManager.Instance?.GetCurrentWave() ?? 1);
+
     }
 
     void GameOver()
