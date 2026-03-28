@@ -28,26 +28,26 @@ public class TutorialManager : MonoBehaviour
     {
         new Color(0.11f, 0.62f, 0.46f),  // Teal   — Neutrophil
         new Color(0.09f, 0.37f, 0.64f),  // Blue   — Macrophage
-        new Color(0.73f, 0.46f, 0.09f),  // Amber  — Eosinophil
+        new Color(0.73f, 0.46f, 0.09f),  // Amber  — Nk cell
     };
 
     // ── ข้อมูลแต่ละ card ──────────────────────
-    string[] titles = { "Neutrophil", "Macrophage", "Eosinophil" };
+    string[] titles = { "Neutrophil", "Macrophage", "NK Cell" };
 
     string[] bodies =
     {
-        "ด่านหน้าที่เร็วที่สุด\nเชี่ยวชาญ Bacteria โดยตรง\nเป็นตัวแรกที่มาถึงจุดติดเชื้อ",
-        "กินและย่อยเชื้อได้ แต่ช้ากว่า\nส่งสัญญาณต่อให้ T-cell ได้\nมีบทบาทสำคัญหลังเกมจบ",
-        "เชี่ยวชาญ Parasite โดยเฉพาะ\nใช้กับ Bacteria แทบไม่ได้ผล\nเลือกผิด = เสีย resource ฟรี"
+        "ด่านหน้า\nเซลล์แนวหน้าที่ถึงจุดติดเชื้อก่อนใคร จับกินและทำลายแบคทีเรียทันทีด้วย Phagocytosis ราคาถูก ใช้ได้เรื่อยๆ แต่อึดน้อย",
+        "ตัวถึก เรียกเพื่อนได้\nเซลล์ขนาดใหญ่ที่จับกินเชื้อโรคได้ต่อเนื่องและทนทานกว่า Neutrophil นอกจากนี้ยังส่งสัญญาณ Cytokine เรียก T-Cell เข้ามาเสริมแนวรับ",
+        "ดาเมจสูง ไม่ต้องรอคำสั่ง\nนักฆ่าของระบบภูมิคุ้มกัน สั่งให้เซลล์ติดเชื้อทำลายตัวเอง (Apoptosis) ได้โดยอัตโนมัติ เหมาะกับศัตรูถึกและบอส"
     };
 
     string[] badges  = { "3Stars vs Bacteria", "2Stars vs Bacteria", "1Star vs Bacteria" };
 
     string[] tips =
     {
-        "ใช้กับ Bacteria = ได้ผลดีที่สุด",
-        "ส่ง signal → T-cell จะช่วยทีหลัง",
-        "เก็บไว้ใช้กับ Parasite เท่านั้น"
+        "ใช้ต่อสู้กับ Bacteria ที่มาเป็นกลุ่มๆได้ดี จะระเบิดตัวเอง",
+        "ใช้ต่อสู้กับ Bacteria ที่มาเดี่ยวหรือปกติทั่วไป แล้วจะส่งสัญญาณไปหา T-cell",
+        "ใช้ต่อสู้กับ Bacteria ที่ตัวใหญ่ หรือมีความอันตรายสูง"
     };
 
     // ─────────────────────────────────────────

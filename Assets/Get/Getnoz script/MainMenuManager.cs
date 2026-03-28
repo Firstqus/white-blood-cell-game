@@ -10,4 +10,8 @@ public class MainMenuManager : MonoBehaviour
     {
         SceneManager.LoadScene("Tutorial");
     }
+    public void OnSettingsPressed()
+    {
+        SceneManager.LoadScene("Settings");
+    }
 }
