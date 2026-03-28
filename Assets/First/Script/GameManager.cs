@@ -104,6 +104,7 @@ void Start()
     public void RestartGame()
     {
         Time.timeScale = 1f;
+        BGMManager.Instance?.PlayBGM();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 

@@ -11,7 +11,15 @@ public class PathogenReachEnd : MonoBehaviour
 
         if (pathogen != null)
         {
-            GameManager.Instance?.TakeDamage(1);
+            if (pathogen.isBoss)
+            {
+                GameManager.Instance?.TakeDamage(99); // ← บอสเข้า = แพ้ทันที
+            }
+            else
+            {
+                GameManager.Instance?.TakeDamage(1);
+            }
+            
             Destroy(other.gameObject);
         }
     }

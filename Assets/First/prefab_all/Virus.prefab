@@ -183,7 +183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pathogen
   type: 1
-  maxHp: 6
+  maxHp: 5.5
   scoreValue: 10
   atpReward: 120
   isBoss: 1

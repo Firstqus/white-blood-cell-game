@@ -60,4 +60,11 @@ public class BGMManager : MonoBehaviour
         audioSource.clip = victoryClip;
         audioSource.Play();
     }
+    public void PlayBGM()
+    {
+        audioSource.Stop();
+        audioSource.loop = true;
+        audioSource.clip = bgmClip;
+        audioSource.Play();
+    }
 }
