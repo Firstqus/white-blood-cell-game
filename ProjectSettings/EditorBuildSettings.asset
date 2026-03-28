@@ -17,6 +17,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Get/Diagnosis.unity
     guid: 547937fbfaf27194ca4a6bf9d0c476ca
+  - enabled: 1
+    path: Assets/Scenes/SampleScene.unity
+    guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Get/information.unity
+    guid: 9739a6b7ebcbb1247ba7328d95b32e9d
+  - enabled: 1
+    path: Assets/Get/Gameend.unity
+    guid: 9408de60139c8794189a121fbac0235c
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 26f8a8f3f997924449ddb5d7b235d80c, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
