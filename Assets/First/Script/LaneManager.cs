@@ -46,7 +46,6 @@ public void ResetForNewWave()
     void Start()
     {
         spawnPoints = new Transform[] { spawnLane1, spawnLane2, spawnLane3 };
-        StartCoroutine(GameSequence());
     }
 
     IEnumerator GameSequence()
