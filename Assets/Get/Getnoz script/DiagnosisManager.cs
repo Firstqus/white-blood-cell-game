@@ -2,6 +2,7 @@ using UnityEngine;
 using Unity.Cinemachine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class DiagnosisManager : MonoBehaviour
 {
@@ -10,15 +11,37 @@ public class DiagnosisManager : MonoBehaviour
 
     public float targetFOV = 20f;
     public float zoomDuration = 2f;
-    public float delayBeforeLoad = 4f; // ← รอกี่วิก่อนวาป
+    public float delayBeforeLoad = 4f;
+
+    [Header("Wrong Answer")]
+    public TextMeshProUGUI wrongText; // ← ลาก Text ใส่ใน Inspector
 
     public void SelectAnswer(string type)
     {
+        if (type != "Bacteria")
+        {
+            // สะสมจำนวนครั้งที่ตอบผิด
+            int wrongCount = PlayerPrefs.GetInt("WrongCount", 0);
+            PlayerPrefs.SetInt("WrongCount", wrongCount + 1);
+            
+            StartCoroutine(ShowWrongMessage());
+            return;
+        }
+
+        // ตอบถูก → วาปเลย ไม่ reset WrongCount
         if (uiPanel != null) uiPanel.SetActive(false);
-        
         BGMPlayer.Instance?.FadeOut(zoomDuration);
-        
         StartCoroutine(ExecuteZoom());
+    }
+
+    IEnumerator ShowWrongMessage()
+    {
+        if (wrongText == null) yield break;
+
+        wrongText.text = "ไม่ใช่! แผลข่วนธรรมดาเกิดจาก Bacteria นะ";
+        wrongText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(5f);
+        wrongText.gameObject.SetActive(false);
     }
 
     IEnumerator ExecuteZoom()
@@ -35,7 +58,6 @@ public class DiagnosisManager : MonoBehaviour
             yield return null;
         }
 
-        // ซูมจบแล้ว รอ 4 วิ แล้ววาปไป Scene ถัดไป
         yield return new WaitForSeconds(delayBeforeLoad);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }

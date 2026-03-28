@@ -48,15 +48,15 @@ public class WaveManager : MonoBehaviour
             waveNarrativeText.gameObject.SetActive(false);
     }
 
-    void Start()
-    {
-        currentWave = 0;
-        ApplyWaveConfig(0);
-
-        StartCoroutine(StartWaveOneSequence());
-    }
-
     // ================= START GAME =================
+
+void Start()
+{
+    currentWave = 0;
+    ApplyWaveConfig(0);          // ← Apply ก่อน
+    AddPenaltyEnemies();         // ← penalty หลัง Apply แต่ก่อน spawn
+    StartCoroutine(StartWaveOneSequence());
+}
 
     IEnumerator StartWaveOneSequence()
     {
@@ -166,6 +166,37 @@ public class WaveManager : MonoBehaviour
         laneManager.swarmCount    = c.swarmCount;
         laneManager.rounds        = c.rounds;
     }
+public void AddPenaltyEnemies()
+{
+    int wrongCount = PlayerPrefs.GetInt("WrongCount", 0);
+    Debug.Log($"WrongCount = {wrongCount}"); // ← เช็คว่าค่าถึงมั้ย
+    
+    if (wrongCount == 0) return;
+
+    if (waveConfigs != null && waveConfigs.Length > 0)
+    {
+        var oldRounds = waveConfigs[0].rounds;
+        Debug.Log($"rounds before = {oldRounds.Length}"); // ← เช็ค rounds
+
+        SpawnRound penalty = new SpawnRound
+        {
+            variant   = BacteriaVariant.Swarm,
+            swarmSize = 2
+        };
+
+        var newRounds = new SpawnRound[oldRounds.Length + 1];
+        newRounds[0] = penalty;
+        oldRounds.CopyTo(newRounds, 1);
+        waveConfigs[0].rounds = newRounds;
+        
+        Debug.Log($"rounds after = {waveConfigs[0].rounds.Length}"); // ← เช็คหลังเพิ่ม
+        laneManager.rounds = waveConfigs[0].rounds; // ← sync ให้ LaneManager ด้วย
+        Debug.Log($"laneManager.rounds = {laneManager.rounds.Length}");
+    }
+
+    PlayerPrefs.SetInt("WrongCount", 0);
+}
+
 }
 
 [System.Serializable]
@@ -185,4 +216,5 @@ public class WaveConfig
         new SpawnRound { variant = BacteriaVariant.Swarm, swarmSize = 4 },
         new SpawnRound { variant = BacteriaVariant.Boss, hpOverride = 5f },
     };
+
 }

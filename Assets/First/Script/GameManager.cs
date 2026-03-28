@@ -50,12 +50,12 @@ public class GameManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    void Start()
-    {
-        UpdateUI();
-        if (gameOverPanel != null) gameOverPanel.SetActive(false);
-        WaveManager.Instance?.CheckWave(score);
-    }
+void Start()
+{
+    UpdateUI();
+    if (gameOverPanel != null) gameOverPanel.SetActive(false);
+    WaveManager.Instance?.CheckWave(score); // ← เหลือแค่นี้
+}
 
     public void AddScore(int points = 10)
 {
