@@ -96,6 +96,7 @@ public class GameManager : MonoBehaviour
     void GameOver()
     {
         Time.timeScale = 0f;
+        BGMManager.Instance?.PlayGameOver();
         if (gameOverPanel  != null) gameOverPanel.SetActive(true);
         if (finalScoreText != null) finalScoreText.text = $"Score: {score}\nKills: {killCount}";
     }
@@ -120,6 +121,7 @@ public class GameManager : MonoBehaviour
     public void ShowVictory()
     {
         Time.timeScale = 0f; // หยุดเกม
+        BGMManager.Instance?.PlayVictory();
         if (victoryPanel != null)
         {
             victoryPanel.SetActive(true);
@@ -128,5 +130,11 @@ public class GameManager : MonoBehaviour
                 victoryStatusText.text = "🛡️ การติดเชื้อถูกควบคุมแล้ว!\nบาดแผลของคุณกำลังได้รับการรักษา...";
             }
         }
+    }
+
+        public void GoToNextScene()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }

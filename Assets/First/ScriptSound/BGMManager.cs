@@ -39,4 +39,25 @@ public class BGMManager : MonoBehaviour
     public void SetVolume(float v) => audioSource.volume = v;
     public void Stop() => audioSource.Stop();
     public void Play() => audioSource.Play();
+
+    [Header("Game Over")]
+    public AudioClip gameOverClip;
+
+    public void PlayGameOver()
+    {
+        audioSource.Stop();
+        audioSource.loop = false;
+        audioSource.clip = gameOverClip;
+        audioSource.Play();
+    }
+    [Header("Victory")]
+    public AudioClip victoryClip;
+
+    public void PlayVictory()
+    {
+        audioSource.Stop();
+        audioSource.loop = false;
+        audioSource.clip = victoryClip;
+        audioSource.Play();
+    }
 }
