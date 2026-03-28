@@ -3,17 +3,16 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 
-public class DropSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
+public class DropSlot : MonoBehaviour, IDropHandler
 {
     public int slotIndex;
-    public StepCard currentCard;
+    [HideInInspector] public StepCard currentCard;
 
     private Image img;
     private TextMeshProUGUI label;
 
-    Color emptyColor  = new Color(0.10f, 0.10f, 0.24f, 1f);
-    Color filledColor = new Color(0.08f, 0.28f, 0.20f, 1f);
-    Color hoverColor  = new Color(0.15f, 0.25f, 0.45f, 1f);
+    Color emptyColor  = new Color(0f, 0f, 0f, 0.3f);
+    Color filledColor = new Color(0.08f, 0.28f, 0.20f, 0.8f);
 
     void Awake()
     {
@@ -27,58 +26,58 @@ public class DropSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
         if (label != null) label.text = slotIndex.ToString();
     }
 
-    public void OnPointerEnter(PointerEventData e)
-    {
-        if (currentCard == null) img.color = hoverColor;
-    }
-
-    public void OnPointerExit(PointerEventData e)
-    {
-        if (currentCard == null) img.color = emptyColor;
-    }
-
     public void OnDrop(PointerEventData e)
     {
         StepCard card = e.pointerDrag?.GetComponent<StepCard>();
         if (card == null) return;
 
-        // ถ้า slot มีการ์ดอยู่แล้ว → ส่งกลับ
         if (currentCard != null)
-        {
-            currentCard.ReturnToCardContainer();
-        }
+            currentCard.GoBackToContainer();
 
-        // วางการ์ดลง slot
+        if (card.currentSlot != null)
+            card.currentSlot.ClearSlot();
+
         PlaceCard(card);
     }
 
-    public void PlaceCard(StepCard card)
+    void PlaceCard(StepCard card)
     {
         currentCard      = card;
         card.currentSlot = this;
 
         card.transform.SetParent(transform, false);
 
+        // ยืด Card เต็ม Slot
         RectTransform cardRT = card.GetComponent<RectTransform>();
-    
-        // รีเซ็ต anchor ให้อยู่กึ่งกลาง
-        cardRT.anchorMin        = new Vector2(0.5f, 0.5f);
-        cardRT.anchorMax        = new Vector2(0.5f, 0.5f);
-        cardRT.pivot            = new Vector2(0.5f, 0.5f);
-        cardRT.anchoredPosition = Vector2.zero;  // ← วางตรงกลาง slot
-        cardRT.sizeDelta        = new Vector2(
-            GetComponent<RectTransform>().rect.width  - 8f,
-            GetComponent<RectTransform>().rect.height - 8f
-        );
+        cardRT.anchorMin        = Vector2.zero;
+        cardRT.anchorMax        = Vector2.one;
+        cardRT.offsetMin        = new Vector2(4, 4);
+        cardRT.offsetMax        = new Vector2(-4, -4);
+
+        // ยืด Text เต็ม Slot ด้วย
+        var tmp = card.GetComponentInChildren<TextMeshProUGUI>();
+        if (tmp != null)
+        {
+            RectTransform tmpRT = tmp.GetComponent<RectTransform>();
+            tmpRT.anchorMin = Vector2.zero;
+            tmpRT.anchorMax = Vector2.one;
+            tmpRT.offsetMin = new Vector2(10, 5);
+            tmpRT.offsetMax = new Vector2(-10, -5);
+
+            tmp.enableAutoSizing = true;
+            tmp.fontSizeMin      = 16;
+            tmp.fontSizeMax      = 36;
+            tmp.alignment        = TextAlignmentOptions.Center;
+        }
 
         img.color = filledColor;
         if (label != null) label.text = "";
     }
 
-    public void RemoveCard()
+    public void ClearSlot()
     {
-        currentCard  = null;
-        img.color    = emptyColor;
+        currentCard = null;
+        img.color   = emptyColor;
         if (label != null) label.text = slotIndex.ToString();
     }
 }

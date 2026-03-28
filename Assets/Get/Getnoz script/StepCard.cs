@@ -6,8 +6,8 @@ public class StepCard : MonoBehaviour,
     IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public int correctOrder;
-    public DropSlot currentSlot;
-    public Transform cardContainer;
+    [HideInInspector] public DropSlot currentSlot;
+    [HideInInspector] public Transform cardContainer;
 
     private Canvas canvas;
     private CanvasGroup cg;
@@ -16,33 +16,28 @@ public class StepCard : MonoBehaviour,
 
     void Awake()
     {
-        canvas = FindFirstObjectByType<Canvas>();
-        cg     = GetComponent<CanvasGroup>();
-        rt     = GetComponent<RectTransform>();
+        canvas      = GetComponentInParent<Canvas>();
+        cg          = GetComponent<CanvasGroup>();
+        rt          = GetComponent<RectTransform>();
         originalSize = rt.sizeDelta;
     }
 
     public void OnBeginDrag(PointerEventData e)
     {
-        // ล้าง slot เดิม
         if (currentSlot != null)
         {
-            currentSlot.RemoveCard();
+            currentSlot.ClearSlot();
             currentSlot = null;
         }
 
-        // เก็บขนาดและตำแหน่งก่อน
         Vector3 worldPos = transform.position;
-
-        // ย้ายขึ้นบน Canvas
         transform.SetParent(canvas.transform, true);
         transform.SetAsLastSibling();
         transform.position = worldPos;
-
-        rt.sizeDelta = originalSize;
+        rt.sizeDelta       = originalSize;
 
         cg.blocksRaycasts = false;
-        cg.alpha = 0.8f;
+        cg.alpha          = 0.8f;
     }
 
     public void OnDrag(PointerEventData e)
@@ -53,20 +48,20 @@ public class StepCard : MonoBehaviour,
     public void OnEndDrag(PointerEventData e)
     {
         cg.blocksRaycasts = true;
-        cg.alpha = 1f;
+        cg.alpha          = 1f;
 
-        // ถ้ายังไม่มี slot รับ → กลับ CardContainer
         if (currentSlot == null)
-        {
-            ReturnToCardContainer();
-        }
+            GoBackToContainer();
     }
 
-    public void ReturnToCardContainer()
+    public void GoBackToContainer()
     {
         currentSlot = null;
         transform.SetParent(cardContainer, false);
-        rt.sizeDelta = originalSize;
-        rt.localPosition = Vector3.zero;
+        rt.anchorMin        = new Vector2(0.5f, 0.5f);
+        rt.anchorMax        = new Vector2(0.5f, 0.5f);
+        rt.pivot            = new Vector2(0.5f, 0.5f);
+        rt.anchoredPosition = Vector2.zero;
+        rt.sizeDelta        = originalSize;
     }
 }
