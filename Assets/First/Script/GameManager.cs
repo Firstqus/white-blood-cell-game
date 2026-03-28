@@ -127,7 +127,7 @@ public class GameManager : MonoBehaviour
             victoryPanel.SetActive(true);
             if (victoryStatusText != null)
             {
-                victoryStatusText.text = "🛡️ การติดเชื้อถูกควบคุมแล้ว!\nบาดแผลของคุณกำลังได้รับการรักษา...";
+                victoryStatusText.text = "";
             }
         }
     }

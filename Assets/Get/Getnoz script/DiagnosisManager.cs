@@ -1,27 +1,23 @@
 using UnityEngine;
-using Unity.Cinemachine; // <--- สำคัญมากสำหรับ Unity 6
+using Unity.Cinemachine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class DiagnosisManager : MonoBehaviour
 {
-    // ช่องสำหรับลาก Cinemachine Camera มาใส่
     public CinemachineCamera vCam; 
-    
-    // ช่องสำหรับลาก Panel UI ที่เก็บปุ่มมาใส่
     public GameObject uiPanel; 
 
     public float targetFOV = 20f;
     public float zoomDuration = 2f;
+    public float delayBeforeLoad = 4f; // ← รอกี่วิก่อนวาป
 
-    // ฟังก์ชันนี้ไว้เชื่อมกับปุ่ม (On Click)
     public void SelectAnswer(string type)
     {
-        // ปิด UI เมื่อเลือกแล้ว
         if (uiPanel != null) uiPanel.SetActive(false);
         
         BGMPlayer.Instance?.FadeOut(zoomDuration);
         
-        // เริ่มซูม
         StartCoroutine(ExecuteZoom());
     }
 
@@ -38,5 +34,9 @@ public class DiagnosisManager : MonoBehaviour
             vCam.Lens.FieldOfView = Mathf.Lerp(startFOV, targetFOV, elapsed / zoomDuration);
             yield return null;
         }
+
+        // ซูมจบแล้ว รอ 4 วิ แล้ววาปไป Scene ถัดไป
+        yield return new WaitForSeconds(delayBeforeLoad);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
