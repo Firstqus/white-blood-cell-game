@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.25, y: 3.97, z: 0}
-  m_LocalScale: {x: 0.5253277, y: 0.5253277, z: 0.5253277}
+  m_LocalScale: {x: 0.6887571, y: 0.6887571, z: 0.6887571}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -83,8 +83,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: -2088672642877526922, guid: 903015b2ddbd5de4e8d8af3bd31d97e1, type: 3}
-  m_Color: {r: 0.90943396, g: 0.073784195, b: 0.1453767, a: 1}
+  m_Sprite: {fileID: 821726831352861822, guid: 1f44188245aa2d947893ee2b6de5136c, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -142,7 +142,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_Radius: 0.63
 --- !u!50 &286145978249505327
 Rigidbody2D:
   serializedVersion: 5
@@ -183,7 +183,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pathogen
   type: 1
-  maxHp: 5
+  maxHp: 6
   scoreValue: 10
   atpReward: 120
   isBoss: 1
+  deathSound: {fileID: 0}
+  bossDeathSound: {fileID: 8300000, guid: f8edf139b01a7084d96c99ced01dbe9c, type: 3}
+  deathParticle: {fileID: 7275548786892498063, guid: 5bc9a0bf98f67d240a936bf476ba2082, type: 3}

@@ -83,8 +83,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 4540396016053426264, guid: 7d78a6faf3016a6469a4a5c2ef8fcb95, type: 3}
-  m_Color: {r: 0.79622644, g: 0.41313633, b: 0.41313633, a: 1}
+  m_Sprite: {fileID: -1211205651840593974, guid: 6cf6ced504f50ac449a770d4e9d1f81a, type: 3}
+  m_Color: {r: 0.81886786, g: 0.22093979, b: 0.22093979, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -186,3 +186,7 @@ MonoBehaviour:
   maxHp: 0.5
   scoreValue: 10
   atpReward: 12.5
+  isBoss: 0
+  deathSound: {fileID: 8300000, guid: f8edf139b01a7084d96c99ced01dbe9c, type: 3}
+  bossDeathSound: {fileID: 0}
+  deathParticle: {fileID: 7275548786892498063, guid: 5bc9a0bf98f67d240a936bf476ba2082, type: 3}
