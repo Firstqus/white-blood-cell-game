@@ -19,6 +19,8 @@ public class DiagnosisManager : MonoBehaviour
         // ปิด UI เมื่อเลือกแล้ว
         if (uiPanel != null) uiPanel.SetActive(false);
         
+        BGMPlayer.Instance?.FadeOut(zoomDuration);
+        
         // เริ่มซูม
         StartCoroutine(ExecuteZoom());
     }
