@@ -14,13 +14,31 @@ public class DiagnosisManager : MonoBehaviour
     public float delayBeforeLoad = 4f;
 
     [Header("Wrong Answer")]
-    public TextMeshProUGUI wrongText; // ← ลาก Text ใส่ใน Inspector
+    public TextMeshProUGUI wrongText;
+
+    [Header("Sound")]
+    public AudioClip clickSound;
+    public AudioClip wrongSound;  // เสียงตอบผิด
+    private AudioSource audioSource;
+
+    void Start()
+    {
+        audioSource = gameObject.AddComponent<AudioSource>();
+    }
+
+    void PlayClick()
+    {
+        if (clickSound != null)
+            audioSource.PlayOneShot(clickSound);
+    }
 
     public void SelectAnswer(string type)
     {
         if (type != "Bacteria")
         {
-            // สะสมจำนวนครั้งที่ตอบผิด
+            if (wrongSound != null)
+                audioSource.PlayOneShot(wrongSound);  // เสียงผิด
+
             int wrongCount = PlayerPrefs.GetInt("WrongCount", 0);
             PlayerPrefs.SetInt("WrongCount", wrongCount + 1);
             
@@ -28,7 +46,8 @@ public class DiagnosisManager : MonoBehaviour
             return;
         }
 
-        // ตอบถูก → วาปเลย ไม่ reset WrongCount
+        PlayClick();  // เสียงถูก
+
         if (uiPanel != null) uiPanel.SetActive(false);
         BGMPlayer.Instance?.FadeOut(zoomDuration);
         StartCoroutine(ExecuteZoom());

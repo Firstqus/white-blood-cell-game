@@ -664,6 +664,8 @@ MonoBehaviour:
   zoomDuration: 2
   delayBeforeLoad: 4
   wrongText: {fileID: 12830280}
+  clickSound: {fileID: 8300000, guid: 0a22147a1bf896242bc05c0fb6f2d557, type: 3}
+  wrongSound: {fileID: 8300000, guid: 97a1106238d25d744ba579ba36e2c74f, type: 3}
 --- !u!4 &702099561
 Transform:
   m_ObjectHideFlags: 0
