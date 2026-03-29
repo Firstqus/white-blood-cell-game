@@ -1636,7 +1636,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 064b4bf06d4adbd4594a9308510cb876, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaveManager
-  waveScoreThresholds: 000000000a000000140000001e00000032000000
+  waveScoreThresholds: 00000000320000006400000096000000c8000000
   waveConfigs:
   - minSpawnGap: 0.8
     maxSpawnGap: 1.5
