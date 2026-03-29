@@ -2824,6 +2824,7 @@ MonoBehaviour:
   textResult: {fileID: 187381699}
   btnNext: {fileID: 1369786187}
   clickSound: {fileID: 0}
+  typingSound: {fileID: 8300000, guid: 8e78accd28865594b8ece4636ca4af01, type: 3}
 --- !u!1 &1103812271
 GameObject:
   m_ObjectHideFlags: 0

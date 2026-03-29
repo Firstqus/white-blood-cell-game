@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.Collections;
 
 public class InformationManager : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class InformationManager : MonoBehaviour
 
     [Header("Sound")]
     public AudioClip clickSound;
+    public AudioClip typingSound;
     private AudioSource audioSource;
 
     void Start()
@@ -85,13 +87,14 @@ public class InformationManager : MonoBehaviour
         panelResult.SetActive(true);
         btnNext.SetActive(true);
         textResult.color = new Color(0.62f, 0.88f, 0.79f);
-        textResult.text  =
+        StartCoroutine(TypeText(
             "เมื่อแบคทีเรียเข้าสู่ร่างกาย Neutrophil จะเป็นด่านแรก\n" +
             "ตามด้วย Macrophage จดจำ Antigen และส่งสัญญาณ\n\n" +
             "T-Helper Cell → B-Cell → Antibody จำเพาะ\n\n" +
             "Memory Cell ถูกเก็บไว้ — หากเชื้อกลับมา\n" +
             "ร่างกายพร้อมสู้ได้เร็วกว่าเดิมทันที\n\n" +
-            "นี่คือหลักการของ Immunological Memory";
+            "นี่คือหลักการของ Immunological Memory"
+        ));
     }
 
     void ShowFail()
@@ -99,7 +102,23 @@ public class InformationManager : MonoBehaviour
         panelResult.SetActive(true);
         btnNext.SetActive(false);
         textResult.color = new Color(0.94f, 0.60f, 0.60f);
-        textResult.text  = "ลำดับยังไม่ถูกต้อง\nลองเรียงใหม่อีกครั้งนะครับ";
+        StartCoroutine(TypeText("ลำดับยังไม่ถูกต้อง\nลองเรียงใหม่อีกครั้งนะครับ"));
+    }
+
+    IEnumerator TypeText(string content)
+    {
+        textResult.text = "";
+        foreach (char c in content)
+        {
+            textResult.text += c;
+
+            if (typingSound != null && c != ' ' && c != '\n' && !audioSource.isPlaying)
+                audioSource.PlayOneShot(typingSound);
+
+            yield return new WaitForSeconds(0.05f);
+        }
+
+        audioSource.Stop(); // หยุดเสียงตอนพิมพ์จบ
     }
 
     public void OnRetryPressed()
