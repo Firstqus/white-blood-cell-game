@@ -24,7 +24,7 @@ EditorBuildSettings:
     path: Assets/Get/information.unity
     guid: 9739a6b7ebcbb1247ba7328d95b32e9d
   - enabled: 1
-    path: Assets/Get/Gameend.unity
+    path: Assets/Get/GameEnd.unity
     guid: 9408de60139c8794189a121fbac0235c
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 26f8a8f3f997924449ddb5d7b235d80c, type: 2}
