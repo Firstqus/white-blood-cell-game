@@ -22,6 +22,9 @@ public class TutorialManager : MonoBehaviour
     public Image[] dots;               // ลาก Dot1, Dot2, Dot3 ใส่
     public Button  btnNext;
     public TextMeshProUGUI btnNextText;
+    [Header("Sound")]
+    public AudioClip clickSound;
+    private AudioSource audioSource;
 
     // ── สีของแต่ละ card ──────────────────────
     Color[] accentColors = new Color[]
@@ -55,22 +58,21 @@ public class TutorialManager : MonoBehaviour
 
     void Start()
     {
+        audioSource = gameObject.AddComponent<AudioSource>();
         ShowCard(0);
     }
 
     public void OnNextPressed()
     {
+        if (clickSound != null)
+            audioSource.PlayOneShot(clickSound);
+
         currentCard++;
 
         if (currentCard >= titles.Length)
-        {
-            // อ่านครบแล้ว → ไป Diagnosis
             SceneManager.LoadScene("Diagnosis");
-        }
         else
-        {
             ShowCard(currentCard);
-        }
     }
 
     void ShowCard(int index)

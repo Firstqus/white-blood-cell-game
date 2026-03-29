@@ -1609,6 +1609,7 @@ MonoBehaviour:
   - {fileID: 715892274}
   btnNext: {fileID: 908411495}
   btnNextText: {fileID: 257672072}
+  clickSound: {fileID: 8300000, guid: 0a22147a1bf896242bc05c0fb6f2d557, type: 3}
 --- !u!4 &1294505347
 Transform:
   m_ObjectHideFlags: 0
