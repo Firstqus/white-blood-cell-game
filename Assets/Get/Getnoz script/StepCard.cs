@@ -9,6 +9,10 @@ public class StepCard : MonoBehaviour,
     [HideInInspector] public DropSlot currentSlot;
     [HideInInspector] public Transform cardContainer;
 
+    [Header("Sound")]
+    public AudioClip dragSound;
+    private AudioSource audioSource;
+
     private Canvas canvas;
     private CanvasGroup cg;
     private RectTransform rt;
@@ -16,14 +20,19 @@ public class StepCard : MonoBehaviour,
 
     void Awake()
     {
-        canvas      = GetComponentInParent<Canvas>();
-        cg          = GetComponent<CanvasGroup>();
-        rt          = GetComponent<RectTransform>();
+        canvas       = GetComponentInParent<Canvas>();
+        cg           = GetComponent<CanvasGroup>();
+        rt           = GetComponent<RectTransform>();
         originalSize = rt.sizeDelta;
+
+        audioSource  = gameObject.AddComponent<AudioSource>();
     }
 
     public void OnBeginDrag(PointerEventData e)
     {
+        if (dragSound != null)
+            audioSource.PlayOneShot(dragSound); // เล่นเสียงตอนเริ่มลาก
+
         if (currentSlot != null)
         {
             currentSlot.ClearSlot();

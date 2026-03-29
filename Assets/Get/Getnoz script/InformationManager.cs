@@ -10,12 +10,17 @@ public class InformationManager : MonoBehaviour
     public TextMeshProUGUI textResult;
     public GameObject     btnNext;
 
+    [Header("Sound")]
+    public AudioClip clickSound;
+    private AudioSource audioSource;
+
     void Start()
     {
+        audioSource = gameObject.AddComponent<AudioSource>();
+
         panelResult.SetActive(false);
         btnNext.SetActive(false);
 
-        // บอกทุก Card ว่า cardContainer คืออะไร
         foreach (Transform child in cardContainer)
         {
             StepCard sc = child.GetComponent<StepCard>();
@@ -23,6 +28,12 @@ public class InformationManager : MonoBehaviour
         }
 
         ShuffleCards();
+    }
+
+    void PlayClick()
+    {
+        if (clickSound != null)
+            audioSource.PlayOneShot(clickSound);
     }
 
     void ShuffleCards()
@@ -38,6 +49,7 @@ public class InformationManager : MonoBehaviour
     public void OnCheckPressed()
     {
         // เช็คว่าใส่การ์ดครบทุกช่องไหม
+        PlayClick();
         foreach (Transform slotT in slotContainer)
         {
             DropSlot slot = slotT.GetComponent<DropSlot>();
@@ -90,6 +102,15 @@ public class InformationManager : MonoBehaviour
         textResult.text  = "ลำดับยังไม่ถูกต้อง\nลองเรียงใหม่อีกครั้งนะครับ";
     }
 
-    public void OnRetryPressed() => panelResult.SetActive(false);
-    public void OnNextPressed()  => SceneManager.LoadScene("GameEnd");
+    public void OnRetryPressed()
+    {
+        PlayClick();  // เพิ่มบรรทัดนี้
+        panelResult.SetActive(false);
+    }
+
+    public void OnNextPressed()
+    {
+        PlayClick();  // เพิ่มบรรทัดนี้
+        SceneManager.LoadScene("GameEnd");
+    }
 }

@@ -312,6 +312,7 @@ MonoBehaviour:
   correctOrder: 6
   currentSlot: {fileID: 0}
   cardContainer: {fileID: 0}
+  dragSound: {fileID: 8300000, guid: 0a22147a1bf896242bc05c0fb6f2d557, type: 3}
 --- !u!114 &42583102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -704,6 +705,7 @@ MonoBehaviour:
   correctOrder: 2
   currentSlot: {fileID: 0}
   cardContainer: {fileID: 0}
+  dragSound: {fileID: 8300000, guid: 0a22147a1bf896242bc05c0fb6f2d557, type: 3}
 --- !u!114 &132627699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1580,6 +1582,7 @@ MonoBehaviour:
   correctOrder: 4
   currentSlot: {fileID: 0}
   cardContainer: {fileID: 0}
+  dragSound: {fileID: 8300000, guid: 0a22147a1bf896242bc05c0fb6f2d557, type: 3}
 --- !u!114 &309387527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2372,6 +2375,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 925895452}
   m_CullTransparentMesh: 1
+--- !u!1 &954728922
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 954728924}
+  - component: {fileID: 954728923}
+  m_Layer: 0
+  m_Name: BGM2Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &954728923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 954728922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6d2d883757dc5a4c9047637e1abf872, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BGM2Manager
+  bgmClip: {fileID: 8300000, guid: 85bbc521f5d1cec4b81128d8cb95adad, type: 3}
+  volume: 1
+--- !u!4 &954728924
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 954728922}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 159.09766, y: 231.44695, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &967681276
 GameObject:
   m_ObjectHideFlags: 0
@@ -2774,6 +2823,7 @@ MonoBehaviour:
   panelResult: {fileID: 714033551}
   textResult: {fileID: 187381699}
   btnNext: {fileID: 1369786187}
+  clickSound: {fileID: 0}
 --- !u!1 &1103812271
 GameObject:
   m_ObjectHideFlags: 0
@@ -2968,6 +3018,7 @@ MonoBehaviour:
   correctOrder: 5
   currentSlot: {fileID: 0}
   cardContainer: {fileID: 0}
+  dragSound: {fileID: 8300000, guid: 0a22147a1bf896242bc05c0fb6f2d557, type: 3}
 --- !u!114 &1225715979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4712,6 +4763,7 @@ MonoBehaviour:
   correctOrder: 3
   currentSlot: {fileID: 0}
   cardContainer: {fileID: 0}
+  dragSound: {fileID: 8300000, guid: 0a22147a1bf896242bc05c0fb6f2d557, type: 3}
 --- !u!114 &1855303556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5020,6 +5072,7 @@ MonoBehaviour:
   correctOrder: 1
   currentSlot: {fileID: 0}
   cardContainer: {fileID: 0}
+  dragSound: {fileID: 8300000, guid: 0a22147a1bf896242bc05c0fb6f2d557, type: 3}
 --- !u!114 &2026746644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5223,3 +5276,4 @@ SceneRoots:
   - {fileID: 502655039}
   - {fileID: 170678669}
   - {fileID: 1861032252}
+  - {fileID: 954728924}
