@@ -3603,7 +3603,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Neutrophil
+  m_text: NK Cell
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e144909ba73162e4a961478d590d0401, type: 2}
   m_sharedMaterial: {fileID: -7476330797186741012, guid: e144909ba73162e4a961478d590d0401, type: 2}
